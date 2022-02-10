@@ -1,14 +1,16 @@
-import {Route, Routes} from "react-router-dom";
+import {Route, RouteObject, Routes} from "react-router-dom";
 import * as React from "react";
 import {ReactElement} from "react";
-import {RouteObject} from "react-router-dom";
-import NotFound from "../page/NotFound";
+import {routeWilDid} from "./hook"
+import {lazyLoad} from "./index";
+
+export type RouteMeta = {
+    title?: string | undefined,
+    auth?: boolean | undefined
+}
 
 export interface CustomerRouteObject extends RouteObject {
-    meta?: {
-        title?: string,
-        auth?: boolean
-    },
+    meta?: RouteMeta,
     element: ReactElement,
     children?: CustomerRouteObject[]
 }
@@ -18,18 +20,8 @@ type Props = {
 };
 
 const Guard = (props: Props) => {
-
-    const {meta, element} = props.data
-
-    if (meta?.title) {
-        document.title = meta.title
-    }
-
-    if (meta?.auth) {
-        return <NotFound/>
-    } else {
-        return element
-    }
+    console.log({...props.data})
+    return lazyLoad(routeWilDid()(props.data))
 }
 
 const useRoutes = (routes: CustomerRouteObject[]): ReactElement => {
@@ -40,7 +32,7 @@ const useRoutes = (routes: CustomerRouteObject[]): ReactElement => {
                     return (
                         <Route caseSensitive={route.caseSensitive} key={index} path={route.path}
                                element={<Guard data={route}/>}>
-                            {traverseChildren(route.children, index)}
+                            {traverseChildren(route.children, String(index))}
                         </Route>
                     )
                 })
@@ -49,16 +41,17 @@ const useRoutes = (routes: CustomerRouteObject[]): ReactElement => {
     )
 }
 
-const traverseChildren = (childrenRoutes: CustomerRouteObject[] | undefined, parentIndex: number): ReactElement => {
+const traverseChildren = (childrenRoutes: CustomerRouteObject[] | undefined, parentIndex: string): ReactElement => {
     if (childrenRoutes && childrenRoutes.length > 0) {
         return (
             <>
                 {
                     childrenRoutes.map((route, index) => {
+                        let currentIndex = parentIndex + "-" + index
                         return (
-                            <Route key={parentIndex + "-" + index} path={route.path} element={<Guard data={route}/>}
+                            <Route key={currentIndex} path={route.path} element={<Guard data={route}/>}
                                    index={route.index}>
-                                {traverseChildren(route.children, index)}
+                                {traverseChildren(route.children, currentIndex)}
                             </Route>
                         )
                     })

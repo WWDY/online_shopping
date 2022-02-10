@@ -1,5 +1,5 @@
 import React, {lazy, ReactElement, ReactNode, Suspense} from "react";
-
+import {useRouteGuard} from "./hook";
 
 const Login = lazy(() => import("../page/Login"));
 
@@ -7,7 +7,7 @@ import Nav from "../component/Nav";
 import {CustomerRouteObject} from "./useRoutes";
 const NotFound = lazy(() => import("../page/NotFound"));
 
-const lazyLoad = (node: ReactNode): ReactElement => {
+export const lazyLoad = (node: ReactNode): ReactElement => {
     return (
         <Suspense fallback={<>111</>}>
             {node}
@@ -26,7 +26,7 @@ const routes: CustomerRouteObject[] = [
         children: [
             {
                 path: '/404',
-                element: lazyLoad(<NotFound/>)
+                element: lazyLoad(<NotFound/>),
             },
             {
                 path: '/login',
@@ -39,5 +39,17 @@ const routes: CustomerRouteObject[] = [
         ]
     },
 ]
-export default routes
 
+useRouteGuard((data: CustomerRouteObject): ReactElement=>{
+
+    const {meta,element} = data
+    if (meta?.title) {
+        document.title = meta.title
+    }
+    if (meta?.auth) {
+        return <NotFound/>
+    }
+    return element;
+})
+
+export default routes

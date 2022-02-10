@@ -4,7 +4,8 @@ import {useEffect, useRef, useState} from "react";
 import Carousel, {CarouselRef} from "antd/es/carousel";
 import {LeftOutlined, RightOutlined} from '@ant-design/icons'
 import {MouseEvent} from 'react'
-import {Outlet} from "react-router-dom";
+import {Link, NavLink, Outlet} from "react-router-dom";
+import {Button} from "antd";
 
 const Nav = () => {
 
@@ -83,6 +84,12 @@ const Nav = () => {
             <div id={"gt"} className={styles.gt} onClick={next}>
                 <RightOutlined/>
             </div>
+            <Link to={"/404"}>
+                <Button type={"primary"}>404</Button>
+            </Link>
+            <Link to={"/login"}>
+                <Button type={"primary"}>login</Button>
+            </Link>
             <Outlet/>
         </div>
     );
