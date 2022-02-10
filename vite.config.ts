@@ -15,6 +15,9 @@ export default defineConfig({
         additionalData: "@import '@/styles/base.scss';"
       }
     }
+  },
+  server:{
+    open: true,
   }
 
 })

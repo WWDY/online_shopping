@@ -28,6 +28,7 @@
   list-style-type: none;
   padding: 20px 0;
   li {
+    cursor:pointer;
     font-size: 16px;
     padding-left: 42px;
     color: #FFF;
@@ -35,13 +36,21 @@
     height: 42px;
     line-height: 42px;
     text-align: left;
+    user-select: none;
     &:hover{
       background-color: #ff6700;
     }
   }
 }
 
+.switchHover{
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+  transition: background-color 500ms;
+}
+
 .lt{
+  text-align: center;
   cursor: pointer;
   margin-left: 234px;
   margin-top: -(@nav_height / 2) - (69px / 2);
@@ -50,29 +59,47 @@
   height: 69px;
   color: rgba(0, 0, 0, 0.5);
   line-height: 69px;
-  font-size: 40px;
+  font-size: 30px;
   transition: background-color 500ms;
   &:hover{
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #FFFFFF;
-    transition: background-color 500ms;
+    &:extend(.switchHover);
   }
 }
 
 .gt{
-  cursor: pointer;
+  .lt();
   margin-left: 1226px - 41px;
-  margin-top: -(@nav_height / 2) - (69px / 2);
+}
+
+.secondSelect{
   position: absolute;
-  width: 41px;
-  height: 69px;
-  color: rgba(0,0,0,0.5);
-  line-height: 69px;
-  font-size: 40px;
-  transition: background-color 500ms;
-  &:hover{
-    transition: background-color 500ms;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #FFFFFF;
+  left: 234px;
+  height: @nav_height;
+  width: 1226px - 234px;
+  background: rgba(0,0,0,.6);
+  z-index: 2000;
+  animation-name: secondSelectOpen;
+  animation-duration: .2s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+}
+
+.secondContent {
+  color: #FFFFFF;
+  list-style-type: none;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+@keyframes secondSelectOpen {
+
+  0%{
+    width: 0;
+  }
+  100%{
+    width: 1226px - 234px;
   }
 }
+
+
