@@ -43,9 +43,7 @@ const routes: CustomerRouteObject[] = [
 useRouteGuard((data: CustomerRouteObject): ReactElement=>{
 
     const {meta,element} = data
-    if (meta?.title) {
-        document.title = meta.title
-    }
+
     if (meta?.auth) {
         return <NotFound/>
     }

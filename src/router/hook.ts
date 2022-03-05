@@ -1,6 +1,6 @@
 import {CustomerRouteObject} from "./useRoutes";
 
-export let routeWilDidCallBack: Function = (data: CustomerRouteObject) => {data.element};
+let routeWilDidCallBack: Function = (data: CustomerRouteObject) => {data.element};
 
 export function routeWilDid(){
     return routeWilDidCallBack;

@@ -20,7 +20,9 @@ type Props = {
 };
 
 const Guard = (props: Props) => {
-    console.log({...props.data})
+    if (props.data.meta?.title) {
+        document.title = props.data.meta?.title
+    }
     return lazyLoad(routeWilDid()(props.data))
 }
 
@@ -32,7 +34,7 @@ const useRoutes = (routes: CustomerRouteObject[]): ReactElement => {
                     return (
                         <Route caseSensitive={route.caseSensitive} key={index} path={route.path}
                                element={<Guard data={route}/>}>
-                            {traverseChildren(route.children, String(index))}
+                            {traverseChildrenRoute(route.children, String(index))}
                         </Route>
                     )
                 })
@@ -41,7 +43,7 @@ const useRoutes = (routes: CustomerRouteObject[]): ReactElement => {
     )
 }
 
-const traverseChildren = (childrenRoutes: CustomerRouteObject[] | undefined, parentIndex: string): ReactElement => {
+const traverseChildrenRoute = (childrenRoutes: CustomerRouteObject[] | undefined, parentIndex: string): ReactElement => {
     if (childrenRoutes && childrenRoutes.length > 0) {
         return (
             <>
@@ -51,7 +53,7 @@ const traverseChildren = (childrenRoutes: CustomerRouteObject[] | undefined, par
                         return (
                             <Route key={currentIndex} path={route.path} element={<Guard data={route}/>}
                                    index={route.index}>
-                                {traverseChildren(route.children, currentIndex)}
+                                {traverseChildrenRoute(route.children, currentIndex)}
                             </Route>
                         )
                     })
