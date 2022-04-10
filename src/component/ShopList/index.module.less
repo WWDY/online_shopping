@@ -1,0 +1,50 @@
+.card{
+  border-radius: .428rem;
+  margin: 16px;
+  border: none;
+  width: 286px;
+  transition: all .3s ease-in-out;
+  display: inline-block;
+}
+.card:hover{
+  transform: translateY(-5px);
+  transition: all .3s ease-in-out;
+}
+:global{
+  .ant-card-meta-description{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ant-card-actions{
+    border-radius: 10px;
+    width: 286px;
+    border: none;
+    li{
+      margin: 0;
+    }
+  }
+}
+.footer{
+  width: 286px;
+  position: relative;
+  z-index: 1000;
+}
+
+.price{
+  color: #5e5873;
+  text-align: right;
+  font-weight: 600;
+  margin-bottom: 10px;
+  span {
+    margin: 20px 0 10px 20px;
+    &:first-child{
+      font-size: 1.2em;
+      font-weight: 400;
+      text-decoration: line-through #5e5873;
+    }
+    &:last-child{
+      font-size: 1.4em;
+    }
+  }
+}

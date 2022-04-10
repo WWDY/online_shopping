@@ -9,6 +9,9 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
+        modifyVars: {
+          'primary-color': '#7367f0'
+        },
       },
       scss:{
         // 自动导入全局样式
